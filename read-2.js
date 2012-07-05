@@ -20,7 +20,7 @@ var Trackable = function(el, timestamp) {
         events = [
             {
                 evaluate: function() {
-                    return (midpoint < (top() + (viewport/2)));
+                    return (midpoint < (top() + (viewport * 1.2))); // visible to lower 1/5th of screen = 'seen'
                 },
                 log: function() {
                     return {
@@ -32,7 +32,7 @@ var Trackable = function(el, timestamp) {
             },
             {
                 evaluate: function() { 
-                    return (height < (top() + (viewport/2)));
+                    return (height < (top() + (viewport * 1.2)));
                 },
                 log: function() {
                     return {
@@ -54,7 +54,8 @@ var Trackable = function(el, timestamp) {
 // Create a list of elements we want to monitor
 var things = [
     new Trackable(document.getElementById('article-body-blocks'), start),
-    new Trackable(document.getElementById('discussion'), start)
+    new Trackable(document.getElementById('discussion'), start),
+    new Trackable(document.getElementById('advert'), start)
     ]
 
 // Bootstrap
