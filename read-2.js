@@ -1,8 +1,6 @@
 // Page load timestamp 
 var start = Date.now()
 
-var mustard = (document.getBoundingClientRect && [].forEach && [].filter);
-
 // A trackable thing on a page
 var Trackable = function(el, timestamp) {
 
@@ -50,7 +48,7 @@ var Trackable = function(el, timestamp) {
 };
 
 // ----------
-//
+
 // Create a list of elements we want to monitor
 var things = [
     new Trackable(document.getElementById('headline'), start),
