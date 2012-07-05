@@ -18,9 +18,10 @@ var Trackable = function(el, timestamp) {
             return -el.getBoundingClientRect().top;
         },
         events = [
-            {
+            {   
+                // is the centre point of the element visible to lower 1/5th of the viewport
                 evaluate: function() {
-                    return (midpoint < (top() + (viewport * 1.2))); // visible to lower 1/5th of screen = 'seen'
+                    return (midpoint < (top() + (viewport * 0.8))); 
                 },
                 log: function() {
                     return {
@@ -31,13 +32,14 @@ var Trackable = function(el, timestamp) {
                 logged: false
             },
             {
+                // is the bottom margin of the element visible in the viewport
                 evaluate: function() { 
-                    return (height < (top() + (viewport * 1.2)));
+                    return (height < (top() + (viewport)));
                 },
                 log: function() {
                     return {
                         'timestamp': timeSincePageLoad(), 
-                        'type': el.id + ':top' 
+                        'type': el.id + ':bottom' 
                     }
                 },
                 logged: false
