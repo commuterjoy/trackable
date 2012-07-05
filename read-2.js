@@ -1,7 +1,7 @@
 // Page load timestamp 
 var start = Date.now()
 
-// Support - (document.getBoundingClientRect && Array.forEach && Array.filter);
+var mustard = (document.getBoundingClientRect && [].forEach && [].filter);
 
 // A trackable thing on a page
 var Trackable = function(el, timestamp) {
@@ -17,18 +17,19 @@ var Trackable = function(el, timestamp) {
         top = function() {
             return -el.getBoundingClientRect().top;
         },
+        log = function(event) {
+            return {
+                'timestamp': timeSincePageLoad(),
+                'type': [el.id, event].join(':')
+            }
+        },
         events = [
             {   
                 // is the centre point of the element visible to lower 1/5th of the viewport
                 evaluate: function() {
                     return (midpoint < (top() + (viewport * 0.8))); 
                 },
-                log: function() {
-                    return {
-                        'timestamp': timeSincePageLoad(),
-                        'type': el.id + ':middle'
-                    }
-                },
+                log: function() { return log('middle') },
                 logged: false
             },
             {
@@ -36,12 +37,7 @@ var Trackable = function(el, timestamp) {
                 evaluate: function() { 
                     return (height < (top() + (viewport)));
                 },
-                log: function() {
-                    return {
-                        'timestamp': timeSincePageLoad(), 
-                        'type': el.id + ':bottom' 
-                    }
-                },
+                log: function() { return log('bottom') },
                 logged: false
             },
 
@@ -53,15 +49,17 @@ var Trackable = function(el, timestamp) {
           }
 };
 
+// ----------
+//
 // Create a list of elements we want to monitor
 var things = [
+    new Trackable(document.getElementById('headline'), start),
     new Trackable(document.getElementById('article-body-blocks'), start),
     new Trackable(document.getElementById('discussion'), start),
     new Trackable(document.getElementById('advert'), start)
     ]
 
-// Bootstrap
-window.onscroll = function() {
+var readable = function() {
 
     things.forEach(function(thing) {
 
@@ -81,4 +79,8 @@ window.onscroll = function() {
         })
     });
 };
+
+// capture events
+window.onscroll = readable 
+window.onload = readable
 
