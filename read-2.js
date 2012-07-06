@@ -53,14 +53,6 @@ var Trackable = function(el, timestamp) {
 
 // ----------
 
-// Create a list of elements we want to monitor
-var things = [
-    new Trackable(document.getElementById('headline'), start),
-    new Trackable(document.getElementById('article-body-blocks'), start),
-    new Trackable(document.getElementById('discussion'), start),
-    new Trackable(document.getElementById('advert'), start)
-    ]
-
 var readable = function() {
 
     things.forEach(function(thing) {
@@ -82,7 +74,18 @@ var readable = function() {
     });
 };
 
-// capture events
-window.onscroll = readable 
-window.onload = readable
+if ( mustard ) {
+
+    var things = [
+        new Trackable(document.getElementById('headline'), start),
+        new Trackable(document.getElementById('article-body-blocks'), start),
+        new Trackable(document.getElementById('discussion'), start),
+        new Trackable(document.getElementById('advert'), start)
+        ]
+
+    // capture events
+    window.onscroll = readable 
+    window.onload = readable
+
+}
 
