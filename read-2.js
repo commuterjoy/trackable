@@ -5,8 +5,6 @@ var mustard = (  (document.getElementById)
               && (document.firstChild && document.firstChild.getBoundingClientRect !== undefined)
               && ([].forEach)) ? true : false;
 
-console.log(mustard);
-
 // A trackable thing on a page
 var Trackable = function(el, timestamp) {
 
